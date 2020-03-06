@@ -28,7 +28,11 @@ var generateBtn = document.querySelector("#generate");
 //                       "t", "T", "u", "U", "v", "V", "w", "W", "x", "X", "y", "Y", "z", "Z",
 //                       "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var howLong;
-var characterType = {};
+var characterType = {
+  
+};
+
+
 
                       
 
