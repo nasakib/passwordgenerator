@@ -18,34 +18,8 @@
 // THEN the password is either displayed in an alert or written to the page
 // ```
 
-
-// // Assignment Code
-// var generateBtn = document.querySelector("#generate");
-// // var possibleChars = ["a", "A", "b", "B", "c", "C", "d", "D",
-// //                       "e", "E", "f", "F", "g", "G", "h", "H",
-// //                       "i", "I", "j", "J", "k", "K", "l", "L", "m",
-// //                       "M", "n", "N", "o", "O", "p", "P", "q", "Q", "r", "R", "s", "S",
-// //                       "t", "T", "u", "U", "v", "V", "w", "W", "x", "X", "y", "Y", "z", "Z",
-// //                       "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-// var howLong;
-// var characterType = {
-  
-// };
-
-// used https://www.youtube.com/watch?v=iKo9pDKKHnc for ideas
-// the uploader (Web Dev Simplified) posted the project on git as well. https://github.com/WebDevSimplified/JavaScript-Password-Generator/blob/master/script.js
-
  //Ask for input from user
-var passNums = parseInt(prompt("How long would you like your password to be? (Range: 7-128)")); //
-
-//Sets passNums = 129 incase of input out of range, so weird loops don't happen
-if (passNums.isInterger == false){
-  passNums = 129;
-}
-
-if (passNums <= 7) {
-  passnums = 129;
-} 
+var passNums = parseInt(prompt("How long would you like your password to be? (Range: 8-128)")); //
 
 //create my Ascii array
   function createArray(lowAscii, highAscii) {
@@ -63,7 +37,7 @@ var wantNums = confirm("Would you like to include numbers?");
 var specialChars = confirm("Would you like to include special characters?");
 alert("If neither lowercase or uppercase is selected, all characters will be in lowercase.");
 
-//Creating Ascii arrays so that I can concat them based on conditions from user
+//Creating Ascii arrays so that I can concat them based on input from user
 var upperRange = createArray(65, 90);
 var lowerRange = createArray(97, 122);
 var numbersRange = createArray(48, 57);
@@ -73,7 +47,7 @@ var symbolsRange = createArray(33, 47).concat(createArray(58, 64)).concat(create
 function getParameters(upperRange, lowerRange, numbersRange, symbolsRange) {
   parameters = this.lowerRange;
   if (this.upperCase == true) { 
-    parameters = parameters.concat(this.upperRange);
+    parameters = parameters.concat(this.upperRange); //concats upperRange array into the parameters array.
   }
   if (this.wantNums == true) {
      parameters = parameters.concat(this.numbersRange);
@@ -84,27 +58,23 @@ function getParameters(upperRange, lowerRange, numbersRange, symbolsRange) {
   return parameters;
 }
 
-//Generates password by taking is user's desired password length and getting random elements from user's custom Ascii array, created in the getParameters function.
+//Generates password by taking in user's desired password length and getting random elements from user's custom Ascii array, created in the getParameters function.
 function generatePassword(passNums) {
   var finalPassword=[];
   for(i = 0; (i < (this.passNums)); i++) {
-  if ((this.passNums <= 129) && (this.passNums >= 7)){
-    var character = getParameters()[Math.floor(Math.random() * getParameters().length)];
-    finalPassword.push(String.fromCharCode(character));
+  if ((this.passNums <= 128) && (this.passNums >= 8)) { //will only run if user inputs number between 8-128.
+    var character = getParameters()[Math.floor(Math.random() * getParameters().length)]; //multiplies random number 0-1 with custom array length, rounds down, and returns element in that index of custom array.
+    finalPassword.push(String.fromCharCode(character)); //converts Ascii values to regular characters and puts it into finalPassword array
   }
     else {
-      finalPassword = [];
+      finalPassword = []; //empty array if conditions aren't met
     }
   }
-  return finalPassword.join('');
+  return finalPassword.join(''); //removes spaces in finalPassword array.
    }
 
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
-  // var passwordText = password;
-  document.getElementById("password").innerHTML = String(password);
+  document.getElementById("password").innerHTML = password;
 }
-
-// Add event listener to generate button
-// generateBtn.addEventListener("click", writePassword);
