@@ -35,69 +35,76 @@
 // used https://www.youtube.com/watch?v=iKo9pDKKHnc for ideas
 // the uploader (Web Dev Simplified) posted the project on git as well. https://github.com/WebDevSimplified/JavaScript-Password-Generator/blob/master/script.js
 
+ //Ask for input from user
+var passNums = parseInt(prompt("How long would you like your password to be? (Range: 7-128)")); //
+
+//Sets passNums = 129 incase of input out of range, so weird loops don't happen
+if (passNums.isInterger == false){
+  passNums = 129;
+}
+
+if (passNums <= 7) {
+  passnums = 129;
+} 
+
+//create my Ascii array
+  function createArray(lowAscii, highAscii) {
+    var howLong = [];
+    for (var i = lowAscii; i <= highAscii; i++) {
+    howLong.push(i);
+    }
+    return howLong;
+  }
  
-var passNums = prompt("How long would you like your password to be? (Minimum length: 7 characters, Maximum length: 128 characters)");
+  //Askinf for more input
 var lowerCase = confirm("Would you like to include lower case characters?");
 var upperCase = confirm("Would you like to include upper case characters?");
 var wantNums = confirm("Would you like to include numbers?");
 var specialChars = confirm("Would you like to include special characters?");
 alert("If neither lowercase or uppercase is selected, all characters will be in lowercase.");
 
-function createArray(lowAscii, highAscii) {
-  var howLong = []
-  for (var i = lowAscii; i <= highAscii; i++) {
-    howLong.push(i)
+//Creating Ascii arrays so that I can concat them based on conditions from user
+var upperRange = createArray(65, 90);
+var lowerRange = createArray(97, 122);
+var numbersRange = createArray(48, 57);
+var symbolsRange = createArray(33, 47).concat(createArray(58, 64)).concat(createArray(91, 96)).concat(createArray(123, 126));
+
+//Creating a user defined Ascii array
+function getParameters(upperRange, lowerRange, numbersRange, symbolsRange) {
+  parameters = this.lowerRange;
+  if (this.upperCase == true) { 
+    parameters = parameters.concat(this.upperRange);
   }
-  return howLong
-}
-
-function areYouANum(passNums){
-  if(passNums.isInteger() === true) {
-  return passNums
-}
-else if(passNums.isInteger() === false) {
- passnums = 129
-}
-
-var upperRange = createArray(65, 90)
-var lowerRange = createArray(97, 122)
-var numbersRange = createArray(48, 57)
-var symbolsRange = createArray(33, 47).concat(createArray(58, 64)).concat(createArray(91, 96)).concat(createArray(123, 126))
-
-function generatePassword(passNums, lowerCase, upperCase, wantNums, specialChars) {
-  var parameters = lowerCase
-  if (upperCase === "true") parameters = parameters.concat(upperRange)
-  if (wantNums === "true") parameters = parameters.concat(numbersRange)
-  if (specialChars === "true") parameters = parameters.concat(symbolsRange)
-  
-  var finalPassword = []
-  for (let i = 0; i < passNums; i++) 
-  if (i >= 129){
-    alert("You did not enter a valid password length.")
+  if (this.wantNums == true) {
+     parameters = parameters.concat(this.numbersRange);
+    }
+  if (this.specialChars == true) { 
+    parameters = parameters.concat(this.symbolsRange);
   }
-  else if (i >= 7 && i <= 128) {
-    var allParams = parameters[Math.floor(Math.random() * parameters.length)]
-    passwordCharacters.push(String.fromCharCode(allParams))
-  }
-  return finalPassword.join('')
+  return parameters;
 }
 
-
-
-
-                      
+//Generates password by taking is user's desired password length and getting random elements from user's custom Ascii array, created in the getParameters function.
+function generatePassword(passNums) {
+  var finalPassword=[];
+  for(i = 0; (i < (this.passNums)); i++) {
+  if ((this.passNums <= 129) && (this.passNums >= 7)){
+    var character = getParameters()[Math.floor(Math.random() * getParameters().length)];
+    finalPassword.push(String.fromCharCode(character));
+  }
+    else {
+      finalPassword = [];
+    }
+  }
+  return finalPassword.join('');
+   }
 
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-  
-  passwordText.value = password;
-
+  // var passwordText = password;
+  document.getElementById("password").innerHTML = String(password);
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword) 
-doItWork = generatePassword();
-
-}
+// generateBtn.addEventListener("click", writePassword);
