@@ -20,3 +20,9 @@ Password Generator Application
 // WHEN the password is generated
 // THEN the password is either displayed in an alert or written to the page
 // ```
+
+worked with John Kang
+
+references:
+https://github.com/WebDevSimplified/JavaScript-Password-Generator/blob/master/script.js
+https://www.youtube.com/watch?v=iKo9pDKKHnc
